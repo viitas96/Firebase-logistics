@@ -1,3 +1,6 @@
+import crypto
+import sys
+sys.modules['Crypto'] = crypto
 import pyrebase
 
 firebaseConfig={

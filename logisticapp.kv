@@ -23,6 +23,8 @@
                     MDTextField:
                         id: search_name
                         hint_text: "Introduceți denumirea sau codul mărfii"
+                        on_text:
+                            app.name_search_and_fill(root.ids.search_name.text)
                     MDRectangleFlatButton:
                         text: "Caută"
                         on_release:
