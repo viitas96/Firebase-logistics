@@ -8,20 +8,22 @@ from kivymd.uix.list import IRightBody, ThreeLineAvatarIconListItem
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.snackbar import Snackbar
 
+
 class MainWindow(MDBoxLayout):
     pass
 
+
 class RightButton(IRightBody, MDIconButton):
-    pass  
+    pass
+
 
 class SearchResulItem(ThreeLineAvatarIconListItem):
-
     last_name = ''
     last_barcode = ''
     last_departament = ''
 
-    def __init__(self, produs_id,**kwargs):
-        super( SearchResulItem, self).__init__(**kwargs)
+    def __init__(self, produs_id, **kwargs):
+        super(SearchResulItem, self).__init__(**kwargs)
         self.produs_id = produs_id
 
     def delete_product(self, obj):
@@ -36,48 +38,49 @@ class SearchResulItem(ThreeLineAvatarIconListItem):
         self.last_barcode = elm["barcode"]
         self.last_departament = elm["departament"]
 
-
     def show_confirm_dialog(self):
         self.dialog = MDDialog(title='Ștergeți înregistrarea?',
-                                text = "Informația ștearsă nu poate fi restabilită",
+                               text="Informația ștearsă nu poate fi restabilită",
                                size_hint=(0.6, 1),
                                buttons=[MDFlatButton(text='Închide', on_release=self.close_dialog),
-                                        MDFlatButton(text='Șterge', on_release=self.delete_product,)]
+                                        MDFlatButton(text='Șterge', on_release=self.delete_product, )]
                                )
         self.dialog.open()
-    
+
     def show_udate_diaalog(self):
         content_layout = MDBoxLayout(
-            orientation = "vertical",
-            height = "130dp"
+            orientation="vertical",
+            height="130dp"
         )
         lsn = MDTextField(
-            hint_text = "Denumirea produsului",
+            hint_text="Denumirea produsului",
         )
         lsb = MDTextField(
-            hint_text = "Barcodul produsului",
+            hint_text="Barcodul produsului",
         )
         lsd = MDTextField(
-            hint_text = "Departamentul produsului",
+            hint_text="Departamentul produsului",
         )
         lsn.text = str(self.last_name)
         lsb.text = str(self.last_barcode)
         lsd.text = str(self.last_departament)
+
         def exchange(obj):
             self.last_name = lsn.text
             self.last_departament = lsd.text
             self.last_barcode = lsb.text
             self.update(obj)
+
         content_layout.add_widget(lsn)
         content_layout.add_widget(lsb)
         content_layout.add_widget(lsd)
         self.update_dialog = MDDialog(title='Editarea înregistrării:',
-                                type = "custom",
-                               size_hint=(.7, 8),
-                               content_cls = content_layout,
-                               buttons=[MDFlatButton(text='Închide',on_release=self.close_update_dialog),
-                                        MDFlatButton(text='Reînoiește', on_release = exchange)]
-                               )
+                                      type="custom",
+                                      size_hint=(.7, 8),
+                                      content_cls=content_layout,
+                                      buttons=[MDFlatButton(text='Închide', on_release=self.close_update_dialog),
+                                               MDFlatButton(text='Reînoiește', on_release=exchange)]
+                                      )
         self.update_dialog.open()
 
     def update(self, obj):
@@ -90,6 +93,8 @@ class SearchResulItem(ThreeLineAvatarIconListItem):
 
     def close_update_dialog(self, obj):
         self.update_dialog.dismiss()
+
+
 class LogisticApp(MDApp):
 
     def clearWidgets(self):
@@ -107,7 +112,8 @@ class LogisticApp(MDApp):
             value = product.val()
             value["key"] = product.key()
             result_list_widget.add_widget(
-                SearchResulItem(text = value["name"], secondary_text=value["departament"], tertiary_text=value["barcode"], produs_id=value["key"])
+                SearchResulItem(text=value["name"], secondary_text=value["departament"], tertiary_text=value["barcode"],
+                                produs_id=value["key"])
             )
 
     def name_search_and_fill(self, query):
@@ -118,7 +124,8 @@ class LogisticApp(MDApp):
             value["key"] = product.key()
             if query in value["name"] or query in value["departament"] or query in value["barcode"]:
                 result_list_widget.add_widget(
-                    SearchResulItem(text = value["name"], secondary_text=value["departament"], tertiary_text=value["barcode"], produs_id=value["key"])
+                    SearchResulItem(text=value["name"], secondary_text=value["departament"],
+                                    tertiary_text=value["barcode"], produs_id=value["key"])
                 )
 
     def build(self):
@@ -133,9 +140,10 @@ class LogisticApp(MDApp):
             app.root.ids.add_name.text = ""
             app.root.ids.add_departament.text = ""
             app.root.ids.add_barcode.text = ""
-    
+
     def on_start(self, **kwargs):
         self.get_all()
+
 
 if __name__ == "__main__":
     LogisticApp().run()

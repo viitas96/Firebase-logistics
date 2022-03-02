@@ -1,9 +1,10 @@
 import crypto
 import sys
+
 sys.modules['Crypto'] = crypto
 import pyrebase
 
-firebaseConfig={
+firebaseConfig = {
     "apiKey": "AIzaSyD6jsgVsHiD2vaGvDPR_4iCdTkXpbFQafo",
     "authDomain": "logistic-72ed4.firebaseapp.com",
     "databaseURL": "https://logistic-72ed4-default-rtdb.europe-west1.firebasedatabase.app",
@@ -18,29 +19,34 @@ firebase = pyrebase.initialize_app(firebaseConfig)
 
 db = firebase.database()
 
+
 def produs_saver(name, barcode, departament):
     data = {
-        "name" : name,
-        "departament" : departament,
-        "barcode" : barcode
+        "name": name,
+        "departament": departament,
+        "barcode": barcode
     }
     db.push(data)
     return True
+
 
 def all():
     resp = db.get()
     return resp
 
+
 def delete_by_id(id):
     db.child(id).remove()
+
 
 def get_one_row(id):
     resp = db.child(id).get()
     return resp
+
 
 def update_row(name, departament, barcode, id):
     db.child(id).update({
         "name": name,
         "departament": departament,
         "barcode": barcode
-        })
+    })
