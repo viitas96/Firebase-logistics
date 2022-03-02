@@ -1,12 +1,10 @@
 from models import *
 from kivymd.app import MDApp
-from kivymd.uix.label import MDLabel
 from kivymd.uix.textfield import MDTextField
 from kivymd.uix.button import MDIconButton, MDRectangleFlatButton, MDFlatButton
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.list import IRightBody, ThreeLineAvatarIconListItem
 from kivymd.uix.dialog import MDDialog
-from kivymd.uix.snackbar import Snackbar
 
 
 class MainWindow(MDBoxLayout):
